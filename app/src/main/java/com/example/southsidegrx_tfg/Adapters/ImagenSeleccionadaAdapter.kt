@@ -25,20 +25,25 @@ class ImagenSeleccionadaAdapter(
 
     override fun onBindViewHolder(holder: HolderImagenSeleccionada, position: Int) {
         val modelo = imagenesSeleccionadaArrayList[position]
-        val imagenUri = modelo.imageUri
 
-        //Leyendo la imagen s
         try {
-            Glide.with(context)
-                .load(imagenUri)
-                .placeholder(R.drawable.ico_item_imagen) //imagen momentánea mientras carga
-                .into(holder.item_imagen)
-
+            if(modelo.deInternet){
+                Glide.with(context)
+                    .load(modelo.imagenUrl)
+                    .placeholder(R.drawable.ico_item_imagen)
+                    .error(R.drawable.ico_item_imagen)
+                    .into(holder.item_imagen)
+            }else{
+                Glide.with(context)
+                    .load(modelo.imageUri)
+                    .placeholder(R.drawable.ico_item_imagen)
+                    .error(R.drawable.ico_item_imagen)
+                    .into(holder.item_imagen)
+            }
         }catch (e: Exception){
-
+            holder.item_imagen.setImageResource(R.drawable.ico_item_imagen)
         }
 
-        //eliminar imagen de la lista
         holder.btn_borrar.setOnClickListener {
             imagenesSeleccionadaArrayList.remove(modelo)
             notifyDataSetChanged()

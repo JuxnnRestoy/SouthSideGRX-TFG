@@ -117,15 +117,17 @@ class AgregarProductoActivity : AppCompatActivity() {
     }
 
     private fun cargarInfo(){
-        var ref = FirebaseDatabase.getInstance().getReference("Productos")
-        ref.child(idProducto).addValueEventListener(object : ValueEventListener{
+        val ref = FirebaseDatabase.getInstance().getReference("Productos")
+        ref.child(idProducto).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 val nombre = "${snapshot.child("nombre").value}"
                 val descripcion = "${snapshot.child("descripcion").value}"
                 val categoria = "${snapshot.child("categoria").value}"
                 val precio = "${snapshot.child("precio").value}"
                 val precioDesc = "${snapshot.child("precioDesc").value}"
                 val notaDesc = "${snapshot.child("notaDesc").value}"
+                val stock = "${snapshot.child("stock").value}"
 
                 binding.edtNombreP.setText(nombre)
                 binding.edtDescripcionP.setText(descripcion)
@@ -133,13 +135,53 @@ class AgregarProductoActivity : AppCompatActivity() {
                 binding.edtPrecioP.setText(precio)
                 binding.edtPrecioDescuentoP.setText(precioDesc)
                 binding.edtNotaDescuentoP.setText(notaDesc)
+                binding.edtStock.setText(stock)
 
+
+                val tieneDescuento = (precioDesc.toDoubleOrNull() ?: 0.0) > 0.0 || notaDesc.isNotEmpty()
+                binding.descuentoSwitch.isChecked = tieneDescuento
+
+                if(tieneDescuento){
+                    binding.edtPorcentajeDescuentoP.visibility = View.VISIBLE
+                    binding.btnCalcularPrecioDesc.visibility = View.VISIBLE
+                    binding.precioConDescuentoProdTxt.visibility = View.VISIBLE
+                    binding.edtPrecioDescuentoP.visibility = View.VISIBLE
+                    binding.edtNotaDescuentoP.visibility = View.VISIBLE
+                }else{
+                    binding.edtPorcentajeDescuentoP.visibility = View.GONE
+                    binding.btnCalcularPrecioDesc.visibility = View.GONE
+                    binding.precioConDescuentoProdTxt.visibility = View.GONE
+                    binding.edtPrecioDescuentoP.visibility = View.GONE
+                    binding.edtNotaDescuentoP.visibility = View.GONE
+                }
+
+                val refImg = FirebaseDatabase.getInstance().getReference("Productos")
+                    .child(idProducto).child("Imagenes")
+
+                refImg.addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshotImg: DataSnapshot) {
+                        imagenSeleccionadaArrayList.clear()
+                        for(ds in snapshotImg.children){
+                            val idImg = ds.child("id").getValue(String::class.java) ?: ds.key ?: ""
+                            val url = ds.child("imagenUrl").getValue(String::class.java) ?: ""
+
+                            if(url.isNotEmpty()){
+                                val modelo = ModeloImagenSeleccionada(
+                                    idImg,
+                                    null,
+                                    url,
+                                    true
+                                )
+                                imagenSeleccionadaArrayList.add(modelo)
+                            }
+                        }
+                        cargarImagenes()
+                    }
+                    override fun onCancelled(error: DatabaseError) {}
+                })
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
@@ -190,7 +232,10 @@ class AgregarProductoActivity : AppCompatActivity() {
                 binding.edtStock.requestFocus()
                 return
             }
-            imagenUri==null-> Toast.makeText(this,"Selecciona al menos una imagen", Toast.LENGTH_SHORT).show()
+            imagenSeleccionadaArrayList.isEmpty() ->{
+                Toast.makeText(this,"Selecciona al menos una imagen",Toast.LENGTH_SHORT).show()
+                return
+            }
             else ->{
                 if(descuentoHab){
                     notaDesc = binding.edtNotaDescuentoP.text.toString().trim()
@@ -224,25 +269,31 @@ class AgregarProductoActivity : AppCompatActivity() {
 
     private fun agregarProductoBD(){
         // set loadin ?
-        var ref = FirebaseDatabase.getInstance().getReference("Productos")
-        val keyId = ref.push().key
+        val ref = FirebaseDatabase.getInstance().getReference("Productos")
+        val idFinal = if(Edicion) idProducto else (ref.push().key ?: return)
 
         val hashMap = HashMap<String, Any>()
-        hashMap["id"] = "${keyId}"
-        hashMap["nombre"] = "${nombreP}"
-        hashMap["descripcion"]="${descripcionP}"
-        hashMap["categoria"]="${categoriaP}"
-        hashMap["precio"]="${precioP}"
-        hashMap["precioDesc"]="${precioDescuentoP}"
-        hashMap["notaDesc"]="${notaDesc}"
-        hashMap["stock"]=stockP.replace(",",".").toDouble()
+        hashMap["id"] = idFinal
+        hashMap["nombre"] = nombreP
+        hashMap["descripcion"] = descripcionP
+        hashMap["categoria"] = categoriaP
+        hashMap["precio"] = precioP
+        hashMap["precioDesc"] = precioDescuentoP
+        hashMap["notaDesc"] = notaDesc
+        hashMap["stock"] = stockP.replace(",",".").toDouble()
 
-
-        ref.child(keyId!!).setValue(hashMap)
+        ref.child(idFinal).updateChildren(hashMap)
             .addOnSuccessListener {
-                subirImagenStorage(keyId)
+
+                val hayNuevas = imagenSeleccionadaArrayList.any { it.imageUri != null }
+                if(hayNuevas){
+                    subirImagenStorage(idFinal)
+                }else{
+                    Toast.makeText(this, if(Edicion) "Producto actualizado" else "Se agregó el producto", Toast.LENGTH_SHORT).show()
+                    if(Edicion) finish() else limpiarCampos()
+                }
             }
-            .addOnFailureListener { e->
+            .addOnFailureListener { e ->
                 Toast.makeText(this,"${e.message}",Toast.LENGTH_SHORT).show()
             }
     }
@@ -250,30 +301,31 @@ class AgregarProductoActivity : AppCompatActivity() {
     private fun subirImagenStorage(keyId:String){
         for(i in imagenSeleccionadaArrayList.indices){
             val modeloImagenSel = imagenSeleccionadaArrayList[i]
+
+            if(modeloImagenSel.deInternet) continue
+
+            val uri = modeloImagenSel.imageUri ?: continue
             val nombreImagen = modeloImagenSel.id
             val rutaImagen = "Productos/$nombreImagen"
 
             val storageRef = FirebaseStorage.getInstance().getReference(rutaImagen)
-            storageRef.putFile(modeloImagenSel.imageUri!!)
+            storageRef.putFile(uri)
                 .addOnSuccessListener { taskSnapshot ->
                     val uriTask = taskSnapshot.storage.downloadUrl
-                    while (!uriTask.isSuccessful); val urlImgCargada = uriTask.result
+                    while (!uriTask.isSuccessful);
+                    val urlImgCargada = uriTask.result
 
                     if(uriTask.isSuccessful){
                         val hashMap = HashMap<String,Any>()
-                        hashMap["id"] = "${modeloImagenSel.id}"
-                        hashMap["imagenUrl"] = "${urlImgCargada}"
+                        hashMap["id"] = modeloImagenSel.id
+                        hashMap["imagenUrl"] = "$urlImgCargada"
 
                         val ref = FirebaseDatabase.getInstance().getReference("Productos")
                         ref.child(keyId).child("Imagenes").child(nombreImagen)
                             .updateChildren(hashMap)
-                        //set loadin false
-                        Toast.makeText(this,"Se agregó el producto",Toast.LENGTH_SHORT).show()
-                        limpiarCampos()
                     }
                 }
-                .addOnFailureListener { e->
-                    //setloadin false
+                .addOnFailureListener { e ->
                     Toast.makeText(this,"${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
