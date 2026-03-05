@@ -14,8 +14,10 @@
         android:layout_height="wrap_content"
         android:text="Detalle de compra"
         android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
+        android:textSize="20sp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/azul_marino_oscuro"
+        android:layout_gravity="center"/>
 
     <!-- Cabecera tipo factura -->
     <com.google.android.material.card.MaterialCardView

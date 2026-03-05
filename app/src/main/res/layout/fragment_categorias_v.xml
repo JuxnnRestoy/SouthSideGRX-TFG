@@ -11,7 +11,16 @@
         android:layout_height="match_parent"
         android:layout_marginTop="15dp"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categorías"
+            android:textColor="@color/azul_marino_oscuro"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+        <!-- Imagen de la categoría -->
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
