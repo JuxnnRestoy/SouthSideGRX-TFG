@@ -1,6 +1,4 @@
-/***********************
- * 0) Firebase init
- ***********************/
+
 const firebaseConfig = {
   apiKey: "AIzaSyC8_lUDS8lequ7qTOH_swSTtG5K6_Mj8ZE",
   authDomain: "southside-c104b.firebaseapp.com",
@@ -16,7 +14,7 @@ const db = firebase.database();
 // Estado
 let cacheUsuarios = [];
 
-// Listeners para modals (evitar duplicados)
+// Listeners para modals 
 let carritoListenerRef = null;
 let comprasListenerRef = null;
 
@@ -74,7 +72,7 @@ function escucharUsuarios() {
         email: u.email || "",
         dni: u.dni || "",
         fechaNacimiento: u.fechaNacimiento || "",
-        tipoUsuario: (u.tipoUsuario || "").toLowerCase() // cliente/vendedor
+        tipoUsuario: (u.tipoUsuario || "").toLowerCase() 
       });
     });
 
@@ -172,7 +170,7 @@ function renderLista(containerId, lista, emptyMsg) {
 });
 }
 
-// ------------------ MODAL: CARRITO ------------------
+//  MODAL: CARRITO 
 
 function abrirCarrito(uidCliente) {
   const modal = M.Modal.getInstance(document.getElementById("modalCarrito"));
@@ -235,7 +233,7 @@ function abrirCarrito(uidCliente) {
   });
 }
 
-// ------------------ MODAL: COMPRAS ------------------
+// MODAL: COMPRAS 
 
 function abrirCompras(uidCliente) {
   const modal = M.Modal.getInstance(document.getElementById("modalCompras"));
@@ -340,7 +338,7 @@ function abrirCompras(uidCliente) {
   });
 }
 
-// ------------------ CREAR USUARIO (RTDB) ------------------
+// CREAR USUARIO
 
 function limpiarFormCrearUsuario() {
   $("nuevoNombre").value = "";
@@ -415,7 +413,7 @@ async function crearUsuarioSoloRTDB() {
   }
 }
 
-// ------------------ ELIMINAR USUARIO (RTDB) ------------------
+// ELIMINAR USUARIO (RTDB) 
 
 async function eliminarUsuarioRTDB(uid) {
   if (!uid) return;
