@@ -1,0 +1,134 @@
+<resources>
+    <string name="app_name">710SouthSideGRX</string>
+
+    <string name="tipo_vendedor">Vendedor</string>
+    <string name="tipo_cliente">Cliente</string>
+
+    <!--NavigationDrawer Vendedor -->
+    <string name="op_inicio_v">Inicio</string>
+    <string name="op_mi_tienda_v">Mi tienda</string>
+    <string name="op_categorias_v">Categorías</string>
+    <string name="op_usuarios_v">Usuarios</string>
+    <string name="op_resenas_v">Reseñas</string>
+    <string name="op_cerrar_sesion_v">Cerrar Sesión</string>
+
+    <!-- NavigationDrawer Cliente -->
+    <string name="op_inicio_c">Inicio</string>
+    <string name="op_mi_perfil_c">Mi perfil</string>
+    <string name="op_cerrar_sesion_c">Cerrar sesión</string>
+
+    <!-- Bottom navigation bar cliente -->
+    <string name="op_tienda_c">Tienda</string>
+    <string name="op_historial_c">Historial de compra</string>
+    <string name="op_carrito_c">Carrito</string>
+    <string name="op_favoritos_c">Favoritos</string>
+    <!-- Bottom navigation bar vendedor -->
+    <string name="op_mis_productos_v">Mis Productos</string>
+    <string name="op_historial_v">Historial</string>
+
+    <string name="txt_bienvenida">Bienvenido a SouthSideGRX</string>
+
+    <string name="abrir_drawer">Abrir drawer</string>
+    <string name="cerrar_drawer">Cerrar drawer</string>
+
+    <!-- RegistroVendedor -->
+    <string name="txt_registro_vendedor">Registro de vendedor</string>
+    <string name="edt_nombreV">Nombre</string>
+    <!--<string name="edt_apellidosV">Apellidos</string>-->
+    <string name="edt_emailV">Email</string>
+    <string name="edt_contrasenaV">Contraseña</string>
+    <string name="edt_ccontrasenaV">Confirmar contraseña</string>
+    <string name="btn_registrarV">Registrarme</string>
+
+    <!-- Registro Cliente -->
+    <string name="txt_registro_cliente">Registro de cliente</string>
+    <string name="edt_nombre_cliente">Nombre</string>
+    <string name="btn_registrar_cliente">Registrar</string>
+
+
+    <!-- Login Vendedor -->
+    <string name="txt_loginV">Login de vendedor</string>
+    <string name="btn_loginV">Acceder</string>
+    <string name="txt_no_cuenta">¿No tienes una cuenta?</string>
+    <string name="tv_registrar">Registrarme</string>
+
+    <!-- Login Cliente -->
+    <string name="txt_login_c">Iniciar Sesión</string>
+    <string name="btn_login_c">Acceder</string>
+    <string name="tv_login_c">Registrarme</string>
+
+    <!-- Productos -->
+    <string name="txt_agregar_productos">Agregar Producto</string>4
+    <string name="edt_nombre_p">Nombre del producto</string>
+    <string name="edt_descripcion_p">Descripción</string>
+    <string name="categoria">Categoría</string>
+    <string name="edt_precio">Precio</string>
+    <string name="txt_descuento_p">Descuento</string>
+    <string name="edt_porcentaje_descuento_p">Introduce porcentaje. Ej: 10, 20, 50 </string>
+    <string name="edt_precio_descuento_p"></string>
+    <string name="edt_nota_descuento_p">10% de descuento</string>
+    <string name="btn_calcular_precio_desc">Calcular</string>
+    <string name="precio_con_descuento_prod_txt">Precio con descuento aplicado</string>
+    <string name="btn_agregar_producto">Agregar Producto</string>
+
+    <!-- Agregar categorías -->
+    <string name="edt_categoria">Introduce una categoría</string>
+    <string name="btn_agregar_categoria">Agregar categoría</string>
+
+    <!-- Item categoría Vendedor-->
+    <string name="item_nombre_c_v">Nombre de categoría</string>
+
+    <!-- Item categoría Cliente -->
+    <string name="item_nombre_c_c">Nombre de categoría</string>
+    <string name="item_ver_productos">Ver productos</string>
+    <!-- Item producto -->
+    <string name="item_nombre_p">Nombre del producto</string>
+    <string name="item_precio_p">00</string>
+    <string name="item_precio_p_desc">00</string>
+    <string name="item_nota_p">ON SALE!!</string>
+
+    <!-- Item producto cliente -->
+    <string name="item_agregar_carrito_p">Añadir al carrito</string>
+
+    <string name="edt_buscar_producto">Buscar producto</string>
+
+    <!-- Registro con número telefónico -->
+    <string name="txt_login_tel">Login con teléfono</string>
+    <string name="edt_telefono">Teléfono</string>
+    <string name="btn_enviar_cod">Enviar código</string>
+    <string name="edt_ver_codigo">Código</string>
+    <string name="btn_verificar_codigo">Verificar código</string>
+    <string name="tv_reenviar_codigo">¿No recibió el código?. <b>Reenviar</b></string>
+
+    <!-- Detalle del producto -->
+    <string name="nombre_pd">Nombre del producto</string>
+    <string name="descripcion_pd_txt">Información general</string>
+    <string name="descripcion_pd">Descripción</string>
+    <string name="precio_pd">0</string>
+    <string name="precio_desc_pd">00</string>
+    <string name="nota_desc_pd">50%</string>
+
+    <string name="imagen_contador_Tv">1/5</string>
+
+    <!-- Carrito -->
+    <string name="nombre_p_car">Nombre del producto</string>
+    <string name="descripcion_p_car">Descripción</string>
+    <string name="nota_desc_p_car">10%</string>
+    <string name="precio_original_p_car">00</string>
+    <string name="precio_desc_p_car">00</string>
+    <string name="cantidad_p_car">1</string>
+    <string name="precio_final_p_car">00</string>
+    <string name="btn_agregar_carrito">Agregar al carrito</string>
+
+    <string name="suma_productos">Suma productos</string>
+
+    <string name="tipo_usuario">Tipo usuario</string>
+    <string name="btn_venta">Venta</string>
+    <string name="carrito_de">Carrito de </string>
+
+    <string name="btn_crear_cliente">Añadir nuevo cliente</string>
+    <string name="btn_crear_vendedor">Añadir nuevo vendedor</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

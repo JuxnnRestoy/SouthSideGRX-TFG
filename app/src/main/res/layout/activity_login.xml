@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_tinte"
+    tools:context=".cliente.LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="24dp">
+
+            <!-- Título -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_login_c"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Icono -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ico_login_cliente"
+                android:contentDescription="@string/txt_login_c"
+                android:layout_marginBottom="16dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@android:color/transparent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="14dp"
+                app:contentPadding="16dp"
+                app:cardBackgroundColor="?attr/colorSurface">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Email -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_email_c"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:endIconMode="clear_text"
+                        app:boxStrokeColor="@color/azul_oscuro"
+                        app:hintTextColor="@color/azul_oscuro">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_email_c"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edt_emailV"
+                            android:inputType="textEmailAddress"
+                            android:drawableStart="@drawable/ico_email"
+                            android:drawablePadding="10dp"
+                            android:padding="14dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Contraseña -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_contrasena_c"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true"
+                        app:boxStrokeColor="@color/azul_oscuro"
+                        app:hintTextColor="@color/azul_oscuro"
+                        android:layout_marginTop="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_contrasena_c"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edt_contrasenaV"
+                            android:inputType="textPassword"
+                            android:drawableStart="@drawable/ico_passw"
+                            android:drawablePadding="10dp"
+                            android:padding="14dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Botón login -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnLoginC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="@string/btn_login_c"
+                        android:textAllCaps="true"
+                        app:cornerRadius="14dp"
+                        app:iconPadding="10dp" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="110dp"
+                            android:layout_height="64dp"
+                            app:cardCornerRadius="14dp"
+                            app:cardUseCompatPadding="true">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnLoginGoogle"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ico_google" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="110dp"
+                            android:layout_height="64dp"
+                            android:layout_marginStart="16dp"
+                            app:cardCornerRadius="14dp"
+                            app:cardUseCompatPadding="true">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btnLoginTelefono"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ico_telefono" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_no_cuenta"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvRegistrarC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_registrarV"
+                        android:textStyle="bold"
+                        android:textColor="@color/azul_oscuro"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+    <!-- Overlay cargando -->
+    <FrameLayout
+        android:id="@+id/overlayCargando"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progreso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+</RelativeLayout>

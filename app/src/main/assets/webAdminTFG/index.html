@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin</title>
+
+  <!-- Materialize -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+  <style>
+    body {
+      background: #fafafa;
+    }
+
+    .muted {
+      color: #777;
+    }
+
+    .badgeTipo {
+      font-size: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #e3f2fd;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="blue">
+    <div class="nav-wrapper container">
+      <a class="brand-logo" style="font-size:18px;">Admin</a>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top:18px;">
+    <!-- Tabs -->
+    <div class="row">
+      <div class="col s12">
+        <ul id="tabsMain" class="tabs">
+          <li class="tab col s12"><a class="active" href="#tabUsuarios">Usuarios</a></li>
+          <!-- Más pestañas después -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- TAB: Usuarios -->
+    <div id="tabUsuarios" class="col s12">
+
+      <!-- Botón Crear -->
+      <div class="row" style="margin-top:10px;">
+        <div class="col s12">
+          <a id="btnAbrirCrearUsuario" class="btn blue">
+            <i class="material-icons left">person_add</i>
+            Crear usuario
+          </a>
+        </div>
+      </div>
+
+      <!-- Buscador -->
+      <div class="row" style="margin-top:10px;">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input id="buscadorUsuarios" type="text">
+          <label for="buscadorUsuarios">Buscar (nombre, email, uid)</label>
+        </div>
+      </div>
+
+      <div id="estado" class="muted" style="margin-bottom:12px;">Cargando...</div>
+
+      <h5 style="margin-top:18px;">Clientes</h5>
+      <div id="listaClientes" class="row"></div>
+
+      <h5 style="margin-top:18px;">Vendedores</h5>
+      <div id="listaVendedores" class="row"></div>
+    </div>
+  </div>
+
+  <!-- Firebase compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Materialize -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <!-- MODALS -->
+
+  <!-- Modal: Carrito -->
+  <div id="modalCarrito" class="modal">
+    <div class="modal-content">
+      <h5>Carrito de compra</h5>
+      <div id="carritoInfo" class="muted">Cargando...</div>
+      <div id="carritoLista" style="margin-top:10px;"></div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+  </div>
+
+  <!-- Modal: Compras -->
+  <div id="modalCompras" class="modal">
+    <div class="modal-content">
+      <h5>Historial de compras</h5>
+      <div id="comprasInfo" class="muted">Cargando...</div>
+      <div id="comprasLista" style="margin-top:10px;"></div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+  </div>
+
+  <!-- Modal: Crear usuario (solo RTDB) -->
+  <div id="modalCrearUsuario" class="modal">
+    <div class="modal-content">
+      <h5>Crear usuario</h5>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="nuevoNombre" type="text">
+          <label for="nuevoNombre">Nombre</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="nuevoEmail" type="email">
+          <label for="nuevoEmail">Email</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="nuevoDni" type="text">
+          <label for="nuevoDni">DNI</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="nuevaFechaNacimiento" type="date">
+          <label class="active" for="nuevaFechaNacimiento">Fecha de nacimiento</label>
+        </div>
+
+        <div class="input-field col s12">
+          <select id="nuevoTipo">
+            <option value="" disabled selected>Elige tipo</option>
+            <option value="cliente">cliente</option>
+            <option value="vendedor">vendedor</option>
+          </select>
+          <label>Tipo de usuario</label>
+        </div>
+
+        <div class="col s12 muted" id="crearUsuarioEstado" style="margin-top:8px;"></div>
+        <div class="col s12 muted" style="margin-top:6px;">
+          Nota: esto crea solo la ficha en Realtime Database (no crea cuenta de login).
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+      <a href="#!" id="btnCrearUsuario" class="waves-effect waves-light btn green">Crear</a>
+    </div>
+  </div>
+
+  <!-- Modal: Editar usuario (solo RTDB) -->
+<div id="modalEditarUsuario" class="modal">
+  <div class="modal-content">
+    <h5>Editar usuario</h5>
+
+    <!-- guardamos el uid aquí -->
+    <input id="editUid" type="hidden" />
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="editNombre" type="text">
+        <label for="editNombre">Nombre</label>
+      </div>
+
+      <div class="input-field col s12">
+        <input id="editEmail" type="email">
+        <label for="editEmail">Email</label>
+      </div>
+
+      <div class="input-field col s12">
+        <input id="editDni" type="text">
+        <label for="editDni">DNI</label>
+      </div>
+
+      <div class="input-field col s12">
+        <input id="editFechaNacimiento" type="date">
+        <label class="active" for="editFechaNacimiento">Fecha de nacimiento</label>
+      </div>
+
+      <div class="input-field col s12">
+        <select id="editTipo">
+          <option value="cliente">cliente</option>
+          <option value="vendedor">vendedor</option>
+        </select>
+        <label>Tipo de usuario</label>
+      </div>
+
+      <div class="col s12 muted" id="editarUsuarioEstado" style="margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+    <a href="#!" id="btnGuardarEdicionUsuario" class="waves-effect waves-light btn green">Guardar</a>
+  </div>
+</div>
+  <!-- App -->
+  <script src="app.js"></script>
+</body>
+
+</html>

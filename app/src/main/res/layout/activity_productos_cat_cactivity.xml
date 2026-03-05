@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".cliente.ProductosCliente.ProductosCatCActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCategoria"
+            android:text="@string/categoria"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/azul_marino_oscuro"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="10dp"
+            android:layout_weight="4"
+            app:endIconMode="clear_text"
+            android:layout_marginStart="12dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:padding="10dp"
+                android:hint="@string/edt_buscar_producto"
+                android:id="@+id/edtBuscarProducto"
+                app:drawableStartCompat="@drawable/ico_buscar"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/ico_xx"
+            android:background="@android:color/transparent"
+            android:id="@+id/ibLimpiarCampo"/> -->
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvProductosC"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_producto_cliente"
+        app:spanCount="2"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

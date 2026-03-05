@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/grupo_opciones"
+        android:checkableBehavior="single">
+
+        <!-- Inicio -->
+        <item
+            android:id="@+id/op_inicio_v"
+            android:title="@string/op_inicio_v"
+            android:icon="@drawable/ico_inicio"
+            />
+
+        <!-- Categorías -->
+        <item
+            android:id="@+id/op_categorias_v"
+            android:title="@string/op_categorias_v"
+            android:icon="@drawable/ico_categoria">
+        </item>
+
+        <!-- Usuarios -->
+        <item
+            android:id="@+id/op_usuarios_v"
+            android:title="@string/op_usuarios_v"
+            android:icon="@drawable/ico_mi_perfil">
+        </item>
+        <!-- Mi tienda -->
+        <item
+            android:id="@+id/op_mi_tienda_v"
+            android:title="@string/op_mi_tienda_v"
+            android:icon="@drawable/ico_tienda"/>
+    </group>
+
+    <!-- Cerrar sesión -->
+    <item
+        android:id="@+id/op_cerrar_sesion_v"
+        android:title="@string/op_cerrar_sesion_v"
+        android:icon="@drawable/ico_exit"/>
+</menu>

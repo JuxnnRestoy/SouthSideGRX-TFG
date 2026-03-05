@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "722373261036",
+    "firebase_url": "https://southside-c104b-default-rtdb.firebaseio.com",
+    "project_id": "southside-c104b",
+    "storage_bucket": "southside-c104b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722373261036:android:404b5f6da6c836356c17c9",
+        "android_client_info": {
+          "package_name": "com.example.southsidegrx_tfg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722373261036-ckidfiomg223nrtbo74vgvt0b0vkqpm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFZJlT-zcT5Mm5OB53d8yIhO8mXUIbrCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722373261036-ckidfiomg223nrtbo74vgvt0b0vkqpm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

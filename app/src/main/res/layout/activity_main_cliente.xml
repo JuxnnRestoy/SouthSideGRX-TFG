@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".cliente.MainActivityCliente"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <include
+        android:id="@+id/appBarMain"
+        layout="@layout/app_bar_main"/>
+    
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationView"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_cliente"
+        app:menu="@menu/nav_drawer_menu_cliente"
+        android:fitsSystemWindows="true"
+        android:padding="8dp"
+        android:paddingBottom="8dp"
+        app:itemBackground="@drawable/nav_item_fondo"
+        app:itemShapeFillColor="@android:color/transparent"
+        app:elevation="8dp" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

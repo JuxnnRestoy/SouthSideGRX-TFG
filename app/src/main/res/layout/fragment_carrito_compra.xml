@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".cliente.Bottom_Nav_Fragments_Cliente.FragmentCarritoCompra"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvTituloCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carrito de compra"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/azul_marino_oscuro"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Lista de productos -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCarrito"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_carrito_compra"/>
+
+    <!-- Barra inferior total -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/azul_marino_oscuro"/>
+
+            <TextView
+                android:id="@+id/sumaProductos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/suma_productos"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/azul_oscuro"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
