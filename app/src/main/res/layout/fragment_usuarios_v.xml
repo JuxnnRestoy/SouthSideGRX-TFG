@@ -6,27 +6,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".vendedor.Nav_Fragments_Vendedor.FragmentUsuariosV">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/botoneraUsuarios">
+        android:id="@+id/botoneraUsuarios"
+        android:orientation="vertical"
+        >
 
+
+        <TextView
+            android:id="@+id/tvUsuarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Usuarios"
+            android:textColor="@color/azul_marino_oscuro"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Usuarios"
-                android:textColor="@color/azul_marino_oscuro"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"/>
-            <!--
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@id/tvUsuarios">
+
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAnadirCliente"
                 android:layout_width="wrap_content"
@@ -41,10 +47,10 @@
                 android:padding="5dp"
                 android:layout_margin="10dp"
                 android:text="@string/btn_crear_vendedor"/>
-                -->
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </RelativeLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

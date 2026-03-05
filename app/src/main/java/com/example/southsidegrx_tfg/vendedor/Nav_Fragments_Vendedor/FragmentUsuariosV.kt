@@ -30,12 +30,12 @@ class FragmentUsuariosV : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentUsuariosVBinding.inflate(layoutInflater, container, false)
 
-        /*
+
         binding.btnAnadirCliente.setOnClickListener { startActivity(Intent(mContext, RegistroUsuarioActivity::class.java).putExtra("tipoUsuario","cliente")) }
         binding.btnAnadirVendedor.setOnClickListener { startActivity(Intent(mContext, RegistroUsuarioActivity::class.java).putExtra("tipoUsuario","vendedor")) }
 
 
-         */
+
         return binding.root
     }
 
