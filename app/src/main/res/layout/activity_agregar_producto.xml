@@ -212,16 +212,21 @@
                 android:padding="10dp"/>
 
             <!-- Precio con descuento -->
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_precio_descuento_p"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/edt_precio_descuento_p"
-                android:id="@+id/edt_precio_descuento_p"
-                android:layout_below="@id/precio_con_descuento_prod_txt"
-                android:layout_marginTop="10dp"
-                android:textColor="#000"
-                android:textSize="17sp"
-                android:padding="10dp"/>
+                android:layout_below="@id/precio_con_descuento_prod_txt">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_precio_descuento_p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Precio con descuento"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </RelativeLayout>
 

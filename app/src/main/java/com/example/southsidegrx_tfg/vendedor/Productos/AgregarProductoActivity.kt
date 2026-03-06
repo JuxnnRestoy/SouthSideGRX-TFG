@@ -12,6 +12,7 @@ import com.example.southsidegrx_tfg.Adapters.ImagenSeleccionadaAdapter
 import com.example.southsidegrx_tfg.Funciones
 import com.example.southsidegrx_tfg.Modelos.Categoria
 import com.example.southsidegrx_tfg.Modelos.ModeloImagenSeleccionada
+import com.example.southsidegrx_tfg.R
 import com.example.southsidegrx_tfg.databinding.ActivityAgregarProductoBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.database.DataSnapshot
@@ -195,11 +196,16 @@ class AgregarProductoActivity : AppCompatActivity() {
             notaDescuento.isEmpty() -> Toast.makeText(this,"Introduce la nota del descuento", Toast.LENGTH_SHORT).show()
             porcentaje.isEmpty() -> Toast.makeText(this,"Introduce el porcentaje", Toast.LENGTH_SHORT).show()
             else ->{
-                val precioOriginalDouble = precioOriginal.toDouble()
-                val porcentajeDouble = porcentaje.toDouble()
+                val precioOriginalDouble = precioOriginal.replace(",", ".").toDoubleOrNull()
+                val porcentajeDouble = porcentaje.replace(",", ".").toDoubleOrNull()
+                if(precioOriginalDouble ==null || porcentajeDouble == null){
+                    Toast.makeText(this,"Datos de descuento no válidos", Toast.LENGTH_SHORT).show()
+                    return
+                }
                 val descuento = precioOriginalDouble*(porcentajeDouble/100)
                 val precioDescuentoAplicado = precioOriginalDouble - descuento
-                binding.precioConDescuentoProdTxt.text = precioDescuentoAplicado.toString()
+                binding.precioConDescuentoProdTxt.text = "Precio con descuento"
+                binding.edtPrecioDescuentoP.setText(String.format("%.2f", precioDescuentoAplicado))
             }
         }
     }
@@ -251,7 +257,7 @@ class AgregarProductoActivity : AppCompatActivity() {
                             binding.edtPorcentajeDescuentoP.requestFocus()
                         }
                         precioDescuentoP.isEmpty()-> {
-                            binding.edtPrecioDescuentoP.setText("No se estableció el precio con descuento")
+                            binding.tilPrecioDescuentoP.error = "Calcula el precio con descuento"
                         }
                         else -> agregarProductoBD()
                     }
@@ -298,52 +304,84 @@ class AgregarProductoActivity : AppCompatActivity() {
             }
     }
 
-    private fun subirImagenStorage(keyId:String){
-        for(i in imagenSeleccionadaArrayList.indices){
-            val modeloImagenSel = imagenSeleccionadaArrayList[i]
+    private fun subirImagenStorage(idFinal: String){
+        val imagenesNuevas = imagenSeleccionadaArrayList.filter { it.imageUri != null }
 
-            if(modeloImagenSel.deInternet) continue
+        if(imagenesNuevas.isEmpty()){
+            Toast.makeText(
+                this,
+                if(Edicion) "Producto actualizado correctamente" else "Producto añadido correctamente",
+                Toast.LENGTH_SHORT
+            ).show()
 
-            val uri = modeloImagenSel.imageUri ?: continue
+            if(Edicion) finish() else limpiarCampos()
+            return
+        }
+
+        var subidasCompletadas = 0
+        val totalImagenes = imagenesNuevas.size
+
+        for(modeloImagenSel in imagenesNuevas){
             val nombreImagen = modeloImagenSel.id
             val rutaImagen = "Productos/$nombreImagen"
 
             val storageRef = FirebaseStorage.getInstance().getReference(rutaImagen)
-            storageRef.putFile(uri)
+            storageRef.putFile(modeloImagenSel.imageUri!!)
                 .addOnSuccessListener { taskSnapshot ->
-                    val uriTask = taskSnapshot.storage.downloadUrl
-                    while (!uriTask.isSuccessful);
-                    val urlImgCargada = uriTask.result
+                    taskSnapshot.storage.downloadUrl.addOnSuccessListener { urlImgCargada ->
 
-                    if(uriTask.isSuccessful){
-                        val hashMap = HashMap<String,Any>()
+                        val hashMap = HashMap<String, Any>()
                         hashMap["id"] = modeloImagenSel.id
-                        hashMap["imagenUrl"] = "$urlImgCargada"
+                        hashMap["imagenUrl"] = urlImgCargada.toString()
 
                         val ref = FirebaseDatabase.getInstance().getReference("Productos")
-                        ref.child(keyId).child("Imagenes").child(nombreImagen)
+                        ref.child(idFinal).child("Imagenes").child(nombreImagen)
                             .updateChildren(hashMap)
+                            .addOnSuccessListener {
+                                subidasCompletadas++
+
+                                if(subidasCompletadas == totalImagenes){
+                                    Toast.makeText(this, if(Edicion) "Producto actualizado correctamente" else "Producto añadido correctamente", Toast.LENGTH_SHORT).show()
+
+                                    if(Edicion){ finish()
+                                    }else{ limpiarCampos()
+                                    }
+                                }
+                            }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this,"${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al subir imagen: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
     private fun limpiarCampos(){
-        imagenSeleccionadaArrayList.clear()
-        adaptadorImagenSeleccionada.notifyDataSetChanged()
         binding.edtNombreP.setText("")
         binding.edtDescripcionP.setText("")
+        binding.tvCategoria.text = "Selecciona categoría"
         binding.edtPrecioP.setText("")
-        binding.tvCategoria.setText("")
-        binding.descuentoSwitch.isChecked=false
-        binding.edtNotaDescuentoP.setText("")
-        binding.edtPorcentajeDescuentoP.setText("")
         binding.edtPrecioDescuentoP.setText("")
+        binding.edtNotaDescuentoP.setText("")
+        binding.edtStock.setText("")
+        binding.edtPorcentajeDescuentoP.setText("")
 
+        binding.precioConDescuentoProdTxt.text = "Precio con descuento"
+        binding.tilPrecioDescuentoP.error = null
 
+        binding.descuentoSwitch.isChecked = false
+
+        binding.edtPorcentajeDescuentoP.visibility = View.GONE
+        binding.btnCalcularPrecioDesc.visibility = View.GONE
+        binding.precioConDescuentoProdTxt.visibility = View.GONE
+        binding.tilPrecioDescuentoP.visibility = View.GONE
+        binding.edtNotaDescuentoP.visibility = View.GONE
+
+        imagenUri = null
+        binding.imgAgregarProducto.setImageResource(R.drawable.ico_agregar_producto)
+
+        imagenSeleccionadaArrayList.clear()
+        cargarImagenes()
     }
 
     private fun cargarCategorias(){
@@ -351,7 +389,7 @@ class AgregarProductoActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Categorias").orderByChild("categoria")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                //limpiar la lista// dentro de modelo se guarda la información de la base de datos // Leer las categorías en tiempo real
+                //limpiar la lista dentro de modelo se guarda la información de la base de datos  Leer las categorías en tiempo real
                 categoriasArrayList.clear()
                 for(ds in snapshot.children){
                     var modelo = ds.getValue(Categoria::class.java)
