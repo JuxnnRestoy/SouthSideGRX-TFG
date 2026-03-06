@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.southsidegrx_tfg.Filtro.FiltroBuscarProductos
 import com.example.southsidegrx_tfg.Filtro.FiltroProductos
 import com.example.southsidegrx_tfg.Modelos.Producto
+import com.example.southsidegrx_tfg.R
 import com.example.southsidegrx_tfg.databinding.ItemProductoBinding
 import com.example.southsidegrx_tfg.vendedor.Productos.AgregarProductoActivity
 import com.google.firebase.database.DataSnapshot
@@ -87,6 +88,33 @@ class ProductoAdapter : RecyclerView.Adapter<ProductoAdapter.HolderProducto>, Fi
     override fun getItemCount(): Int {
         return productosArrayList.size
     }
+
+    private fun cargarPrimeraImagen(modeloProducto: Producto,holder: HolderProducto){
+        val idProducto = modeloProducto.id
+
+        val ref = FirebaseDatabase.getInstance().getReference("Productos")
+        ref.child(idProducto).child("Imagenes")
+            .limitToLast(1)
+            .addListenerForSingleValueEvent(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for(ds in snapshot.children){
+                        val imagenUrl = "${ds.child("imagenUrl").value}"
+
+                        try{
+                            Glide.with(mContext)
+                                .load(imagenUrl)
+                                .placeholder(R.drawable.ico_item_imagen)
+                                .error(R.drawable.ico_item_imagen)
+                                .into(holder.imagenProducto)
+                        }catch (e: Exception){
+                            holder.imagenProducto.setImageResource(R.drawable.ico_item_imagen)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
     private fun eliminarProducto(idProducto: String){
         val ref = FirebaseDatabase.getInstance().getReference("Productos")
         ref.child(idProducto)
@@ -120,34 +148,6 @@ class ProductoAdapter : RecyclerView.Adapter<ProductoAdapter.HolderProducto>, Fi
             holder.item_precio_p.paintFlags = holder.item_precio_p.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() //quitar tachado
         }
     }
-
-    private fun cargarPrimeraImagen(modeloProducto: Producto,holder: ProductoAdapter.HolderProducto){
-        val idProducto = modeloProducto.id
-
-        val ref = FirebaseDatabase.getInstance().getReference("Productos")
-        ref.child(idProducto).child("Imagenes")
-            .limitToLast(1).addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for(ds in snapshot.children){
-                        val imagenUrl = "${ds.child("imagenUrl").value}"
-
-                        try{
-                            Glide.with(mContext).load(imagenUrl)
-                                .placeholder(com.example.southsidegrx_tfg.R.drawable.ico_item_imagen)
-                                .into(holder.imagenProducto)
-                        }catch (e: Exception){
-
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-
-            })
-    }
-
     override fun getFilter(): Filter? {
         if(filtro == null){
             filtro = FiltroBuscarProductos(this,filtroLista)

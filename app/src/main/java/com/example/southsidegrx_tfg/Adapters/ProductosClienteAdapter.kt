@@ -331,7 +331,7 @@ class ProductosClienteAdapter: RecyclerView.Adapter<ProductosClienteAdapter.Hold
 
         val ref = FirebaseDatabase.getInstance().getReference("Productos")
         ref.child(idProducto).child("Imagenes")
-            .limitToLast(1).addValueEventListener(object: ValueEventListener {
+            .limitToLast(1).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(ds in snapshot.children){
                         val imagenUrl = "${ds.child("imagenUrl").value}"

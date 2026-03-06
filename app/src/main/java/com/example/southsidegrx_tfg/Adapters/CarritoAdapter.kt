@@ -209,7 +209,7 @@ class CarritoAdapter: RecyclerView.Adapter<CarritoAdapter.HolderProductoCarrito>
 
         val ref = FirebaseDatabase.getInstance().getReference("Productos")
         ref.child(idProducto).child("Imagenes")
-            .limitToFirst(1).addValueEventListener(object: ValueEventListener {
+            .limitToFirst(1).addListenerForSingleValueEvent(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(ds in snapshot.children){
                         val imagenUrl = "${ds.child("imagenUrl").value}"

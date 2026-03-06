@@ -41,6 +41,9 @@ class FragmentMisProductosV : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        productoArrayList = ArrayList()
+        adapterProducto = ProductoAdapter(mContext, productoArrayList)
+        binding.rvProductos.adapter = adapterProducto
         listarProductos()
 
         binding.edtBuscarProducto.addTextChangedListener(object: TextWatcher{
@@ -64,8 +67,6 @@ class FragmentMisProductosV : Fragment() {
     }
 
     private fun listarProductos(){
-        productoArrayList = ArrayList()
-
         val ref = FirebaseDatabase.getInstance().getReference("Productos")
         ref.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -85,8 +86,7 @@ class FragmentMisProductosV : Fragment() {
 
                     productoArrayList.add(modeloProducto)
                 }
-                adapterProducto = ProductoAdapter(mContext,productoArrayList)
-                binding.rvProductos.adapter = adapterProducto
+                adapterProducto.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {

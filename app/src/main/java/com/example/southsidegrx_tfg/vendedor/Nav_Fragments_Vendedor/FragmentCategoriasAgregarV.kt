@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -122,31 +123,30 @@ class FragmentCategoriasAgregarV : Fragment() {
             }
     }
     private fun subirImagenStorage(keyId:String){
-        //setLoading(true)????
+        //setLoading(true)
         val nombreImagen = keyId
         val nombreCarpeta = "Categorias/${nombreImagen}"
         val storageRef = FirebaseStorage.getInstance().getReference(nombreCarpeta)
         storageRef.putFile(imageUri!!).addOnSuccessListener {taskSnapshot ->
             //setLoading(false)
-            val uriTask = taskSnapshot.storage.downloadUrl
-            while(!uriTask.isSuccessful);
-            val urlImagenCargada = uriTask.result
-
-            if(uriTask.isSuccessful){
+            taskSnapshot.storage.downloadUrl.addOnSuccessListener{urlImagenCargada ->
                 val hashMap = HashMap<String,Any>()
-                hashMap["imagenUrl"]="$urlImagenCargada"
+                hashMap["imagenUrl"] = urlImagenCargada.toString()
                 val ref = FirebaseDatabase.getInstance().getReference("Categorias")
                 ref.child(nombreImagen).updateChildren(hashMap)
-                Toast.makeText(mContext,"Se agregó la categoría con éxito",Toast.LENGTH_SHORT).show()
-                binding.edtCategoria.setText("")
-                imageUri = null
-                binding.imgCategorias.setImageURI(imageUri)
-                binding.imgCategorias.setImageResource(R.drawable.ico_categorias)
+                    .addOnSuccessListener {
+                        Toast.makeText(mContext,"Se agregó la categoría con éxito",Toast.LENGTH_SHORT).show()
+                        binding.edtCategoria.setText("")
+                        imageUri = null
+                        binding.imgCategorias.setImageResource(R.drawable.ico_categorias)
+                    }
             }
+                .addOnFailureListener { e ->
+                    Toast.makeText(mContext,"${e.message}",Toast.LENGTH_SHORT).show()
+                }
         }
-            .addOnFailureListener {e->
-                //setLoading(false)
-                Toast.makeText(context,"${e.message}",Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(mContext,"${e.message}",Toast.LENGTH_SHORT).show()
             }
     }
 

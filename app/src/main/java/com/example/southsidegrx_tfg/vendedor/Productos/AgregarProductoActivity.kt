@@ -314,10 +314,16 @@ class AgregarProductoActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            if(Edicion) finish() else limpiarCampos()
+            if(Edicion){
+                finish()
+            }else{
+                limpiarCampos()
+            }
             return
         }
 
+        val refProductos = FirebaseDatabase.getInstance().getReference("Productos")
+        val urlsSubidas = ArrayList<String>()
         var subidasCompletadas = 0
         val totalImagenes = imagenesNuevas.size
 
@@ -328,27 +334,51 @@ class AgregarProductoActivity : AppCompatActivity() {
             val storageRef = FirebaseStorage.getInstance().getReference(rutaImagen)
             storageRef.putFile(modeloImagenSel.imageUri!!)
                 .addOnSuccessListener { taskSnapshot ->
-                    taskSnapshot.storage.downloadUrl.addOnSuccessListener { urlImgCargada ->
+                    taskSnapshot.storage.downloadUrl
+                        .addOnSuccessListener { urlImgCargada ->
 
-                        val hashMap = HashMap<String, Any>()
-                        hashMap["id"] = modeloImagenSel.id
-                        hashMap["imagenUrl"] = urlImgCargada.toString()
+                            val imagenUrl = urlImgCargada.toString()
+                            urlsSubidas.add(imagenUrl)
 
-                        val ref = FirebaseDatabase.getInstance().getReference("Productos")
-                        ref.child(idFinal).child("Imagenes").child(nombreImagen)
-                            .updateChildren(hashMap)
-                            .addOnSuccessListener {
-                                subidasCompletadas++
+                            val hashMap = HashMap<String, Any>()
+                            hashMap["id"] = modeloImagenSel.id
+                            hashMap["imagenUrl"] = imagenUrl
 
-                                if(subidasCompletadas == totalImagenes){
-                                    Toast.makeText(this, if(Edicion) "Producto actualizado correctamente" else "Producto añadido correctamente", Toast.LENGTH_SHORT).show()
+                            refProductos.child(idFinal).child("Imagenes").child(nombreImagen)
+                                .updateChildren(hashMap)
+                                .addOnSuccessListener {
+                                    subidasCompletadas++
 
-                                    if(Edicion){ finish()
-                                    }else{ limpiarCampos()
+                                    if(subidasCompletadas == totalImagenes){
+
+                                        // Guardar la primera imagen subida como principal
+                                        refProductos.child(idFinal).child("imagenPrincipal")
+                                            .setValue(urlsSubidas.first())
+                                            .addOnSuccessListener {
+                                                Toast.makeText(
+                                                    this,
+                                                    if(Edicion) "Producto actualizado correctamente" else "Producto añadido correctamente",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+
+                                                if(Edicion){
+                                                    finish()
+                                                }else{
+                                                    limpiarCampos()
+                                                }
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Toast.makeText(this, "Error guardando imagen principal: ${e.message}", Toast.LENGTH_SHORT).show()
+                                            }
                                     }
                                 }
-                            }
-                    }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Error guardando imagen en BD: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error obteniendo URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error al subir imagen: ${e.message}", Toast.LENGTH_SHORT).show()

@@ -9,5 +9,5 @@ data class Producto(
     var precioDesc : Double = 0.0,
     var notaDesc:String="",
     var favorito: Boolean = false,
-    var stock: Double=0.0
+    var stock: Double=0.0,
 )
