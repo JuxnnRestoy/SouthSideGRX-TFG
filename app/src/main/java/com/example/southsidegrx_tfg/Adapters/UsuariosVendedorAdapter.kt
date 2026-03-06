@@ -38,19 +38,14 @@ class UsuariosVendedorAdapter: RecyclerView.Adapter<UsuariosVendedorAdapter.Hold
         holder.tv_nombre.text = modelo.nombre
         holder.tv_email.text = modelo.email
         holder.tv_tipoUsuario.text = modelo.tipoUsuario
-        val imagen = (modelo.imagen?: "".trim())
-        if(imagen.isEmpty() || imagen == null){
+        if (modelo.imagen.isNullOrEmpty()) {
             holder.imgUsuarioItem.setImageResource(R.drawable.ico_login_cliente)
-        }else{
-            Glide.with(mContext).load(imagen)
+        } else {
+            Glide.with(mContext)
+                .load(modelo.imagen)
                 .placeholder(R.drawable.ico_login_cliente)
+                .error(R.drawable.ico_login_cliente)
                 .into(holder.imgUsuarioItem)
-        }
-        try{
-            Glide.with(mContext).load(imagen).placeholder(R.drawable.ico_login_cliente)
-                .error(R.drawable.ico_login_cliente).into(holder.imgUsuarioItem)
-        }catch (e: Exception){
-            holder.imgUsuarioItem.setImageResource(R.drawable.ico_login_cliente)
         }
 
         holder.btn_eliminar.setOnClickListener {

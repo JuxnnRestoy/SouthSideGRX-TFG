@@ -179,7 +179,7 @@ class RegistroUsuarioActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 setLoading(false)
-                val mensaje = when (e) {
+                    when (e) {
                     is FirebaseAuthUserCollisionException -> {
                         binding.tilEmail.error = "Ese email ya está registrado"
                         binding.edtEmail.requestFocus()
