@@ -10,13 +10,12 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.southsidegrx_tfg.R
-import com.example.southsidegrx_tfg.cliente.LoginActivity
+import com.example.southsidegrx_tfg.LoginActivity
 import com.example.southsidegrx_tfg.databinding.ActivityMainVendedorBinding
 import com.example.southsidegrx_tfg.vendedor.Bottom_Nav_Fragments_Vendedor.FragmentMisProductosV
 import com.example.southsidegrx_tfg.vendedor.Bottom_Nav_Fragments_Vendedor.FragmentHistorialV
-import com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor.FragmentCategoriasV
+import com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor.FragmentCategoriasAgregarV
 import com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor.FragmentInicioV
-import com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor.FragmentMiTiendaV
 import com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor.FragmentUsuariosV
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -83,11 +82,8 @@ class MainActivityVendedor : AppCompatActivity(), NavigationView.OnNavigationIte
             R.id.op_inicio_v->{
                 reemplazarFragment(FragmentInicioV())
             }
-            R.id.op_mi_tienda_v->{
-                reemplazarFragment(FragmentMiTiendaV())
-            }
             R.id.op_categorias_v-> {
-                reemplazarFragment(FragmentCategoriasV())
+                reemplazarFragment(FragmentCategoriasAgregarV())
             }
             R.id.op_usuarios_v->{
                 reemplazarFragment(FragmentUsuariosV())

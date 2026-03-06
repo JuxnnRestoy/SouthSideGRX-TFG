@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cliente.RegistroUsuarioActivity">
+    tools:context=".RegistroUsuarioActivity"
+    android:background="@color/fondo_tinte">
 
     <!-- Toolbar simple -->
     <RelativeLayout
@@ -31,7 +32,7 @@
             android:src="@drawable/ico_subir_producto"/>
     </RelativeLayout>
 
-    <!-- Foto (similar a tu AgregarProductoActivity: una imagen grande que se pulsa) -->
+    <!-- Foto  -->
     <RelativeLayout
         android:id="@+id/RLImagen"
         android:layout_width="match_parent"
@@ -83,7 +84,7 @@
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Tipo usuario (puede ser un TextView clickable como tu “categoría” en producto) -->
+            <!-- Tipo usuario -->
             <TextView
                 android:id="@+id/tvTipoUsuario"
                 android:layout_width="match_parent"
@@ -146,7 +147,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Overlay cargando como ya haces -->
+    <!-- Overlay cargando -->
     <FrameLayout
         android:id="@+id/overlayCargando"
         android:layout_width="match_parent"

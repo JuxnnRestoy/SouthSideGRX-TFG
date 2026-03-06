@@ -65,21 +65,31 @@ class DetalleProductoActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("Productos")
         ref.child(idProducto).addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-            val modeloProducto = snapshot.getValue(Producto::class.java)
+            val modeloProducto = Producto()
+            modeloProducto.id = snapshot.child("id").getValue(String::class.java) ?: snapshot.key ?: ""
+            modeloProducto.nombre = snapshot.child("nombre").getValue(String::class.java) ?: ""
+            modeloProducto.descripcion = snapshot.child("descripcion").getValue(String::class.java) ?: ""
+            modeloProducto.categoria = snapshot.child("categoria").getValue(String::class.java) ?: ""
+            modeloProducto.notaDesc = snapshot.child("notaDesc").getValue(String::class.java) ?: ""
+            modeloProducto.favorito = snapshot.child("favorito").getValue(Boolean::class.java) ?: false
 
-            val nombre = modeloProducto?.nombre
-            val descripcion = modeloProducto?.descripcion
-            val precio = modeloProducto?.precio
-            val precioDesc = modeloProducto?.precioDesc
-            val notaDesc = modeloProducto?.notaDesc
+            modeloProducto.precio = leerDouble(snapshot, "precio")
+            modeloProducto.precioDesc = leerDouble(snapshot, "precioDesc")
+            modeloProducto.stock = leerDouble(snapshot, "stock")
+
+            val nombre = modeloProducto.nombre
+            val descripcion = modeloProducto.descripcion
+            val precio = modeloProducto.precio
+            val precioDesc = modeloProducto.precioDesc
+            val notaDesc = modeloProducto.notaDesc
 
             binding.nombrePD.text = nombre
             binding.descripcionPD.text = descripcion
-            binding.precioPD.text = precio.plus(" CRD")
+            binding.precioPD.text = String.format("%.2f CRD", precio)
 
-            if(!precioDesc.equals("")&& !notaDesc.equals("")){
+            if(precioDesc > 0.0 && notaDesc.isNotEmpty()){
                 // producto con descuento
-                binding.precioDescPD.text = precioDesc.plus(" CRD")
+                binding.precioDescPD.text = String.format("%.2f CRD", precioDesc)
                 binding.notaDescPD.text = notaDesc
                 binding.precioPD.paintFlags = binding.precioPD.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
@@ -97,5 +107,16 @@ class DetalleProductoActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    private fun leerDouble(ds: DataSnapshot, campo: String): Double {
+        val v = ds.child(campo).value ?: return 0.0
+        return when (v) {
+            is Double -> v
+            is Long -> v.toDouble()
+            is Int -> v.toDouble()
+            is String -> v.replace(',', '.').toDoubleOrNull() ?: 0.0
+            else -> 0.0
+        }
     }
 }

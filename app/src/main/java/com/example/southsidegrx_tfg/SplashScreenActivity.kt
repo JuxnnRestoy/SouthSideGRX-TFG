@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
-import com.example.southsidegrx_tfg.cliente.LoginActivity
 import com.example.southsidegrx_tfg.cliente.MainActivityCliente
 import com.example.southsidegrx_tfg.vendedor.MainActivityVendedor
 import com.google.firebase.auth.FirebaseAuth

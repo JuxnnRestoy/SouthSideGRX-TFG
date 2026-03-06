@@ -4,13 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".cliente.Bottom_Nav_Fragments_Cliente.FragmentFavoritosCliente">
+    tools:context=".cliente.Bottom_Nav_Fragments_Cliente.FragmentFavoritosCliente"
+    android:padding="10dp"
+    android:background="@color/fondo_tinte">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favoritos"
+        android:textStyle="bold"
+        android:textColor="@color/azul_marino_oscuro"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavoritos"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_producto_cliente"/>
+        tools:listitem="@layout/item_producto_cliente"
+        android:layout_marginTop="30dp"/>
 
 </FrameLayout>

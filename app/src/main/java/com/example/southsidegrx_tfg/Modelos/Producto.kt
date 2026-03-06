@@ -5,8 +5,8 @@ data class Producto(
     var nombre:String="",
     var descripcion:String="",
     var categoria:String="",
-    var precio:String = "",
-    var precioDesc : String="",
+    var precio:Double = 0.0,
+    var precioDesc : Double = 0.0,
     var notaDesc:String="",
     var favorito: Boolean = false,
     var stock: Double=0.0

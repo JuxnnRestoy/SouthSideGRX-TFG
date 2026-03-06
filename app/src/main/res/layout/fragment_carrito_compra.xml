@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".cliente.Bottom_Nav_Fragments_Cliente.FragmentCarritoCompra"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/fondo_tinte">
 
     <TextView
         android:id="@+id/tvTituloCarrito"

@@ -63,7 +63,16 @@ class ProductoAdapter : RecyclerView.Adapter<ProductoAdapter.HolderProducto>, Fi
         }
 
 
-
+        holder.ib_eliminar.setOnClickListener {
+            android.app.AlertDialog.Builder(mContext)
+                .setTitle("Eliminar producto")
+                .setMessage("¿Seguro que quieres eliminar ${modeloProducto.nombre}?")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    eliminarProducto(modeloProducto.id)
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
 
 
         holder.ib_editar.setOnClickListener {
@@ -77,6 +86,17 @@ class ProductoAdapter : RecyclerView.Adapter<ProductoAdapter.HolderProducto>, Fi
 
     override fun getItemCount(): Int {
         return productosArrayList.size
+    }
+    private fun eliminarProducto(idProducto: String){
+        val ref = FirebaseDatabase.getInstance().getReference("Productos")
+        ref.child(idProducto)
+            .removeValue()
+            .addOnSuccessListener {
+                android.widget.Toast.makeText(mContext, "Producto eliminado", android.widget.Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                android.widget.Toast.makeText(mContext, "No se pudo eliminar: ${e.message}", android.widget.Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun visualizarDescuento(modeloProducto: Producto,holder: ProductoAdapter.HolderProducto){
@@ -143,6 +163,7 @@ class ProductoAdapter : RecyclerView.Adapter<ProductoAdapter.HolderProducto>, Fi
         var item_nota_p = binding.itemNotaP
         var ib_editar = binding.ibEditar
         var item_stock = binding.itemStock
+        var ib_eliminar = binding.ibEliminar
 
     }
 }

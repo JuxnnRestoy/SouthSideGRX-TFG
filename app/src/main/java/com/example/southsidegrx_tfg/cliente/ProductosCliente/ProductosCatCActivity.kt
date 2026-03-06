@@ -53,16 +53,6 @@ class ProductosCatCActivity : AppCompatActivity() {
                 }
             }
         })
-        /*
-        binding.ibLimpiarCampo.setOnClickListener {
-            val consulta = binding.edtBuscarProducto.text.toString().trim()
-            if(consulta.isNotEmpty()){
-                binding.edtBuscarProducto.setText("")
-                Toast.makeText(this,"Campo limpio",Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this,"No se ha ingresado consulta",Toast.LENGTH_SHORT).show()
-            }
-        }*/
     }
 
     private fun listarProductos(nombreCat:String){
@@ -74,16 +64,37 @@ class ProductosCatCActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     productoArrayList.clear()
                     for (ds in snapshot.children) {
-                        val modeloProducto = ds.getValue(Producto::class.java)
-                        productoArrayList.add(modeloProducto!!)
+                        val modeloProducto = Producto()
+                        modeloProducto.id = ds.child("id").getValue(String::class.java) ?: ds.key ?: ""
+                        modeloProducto.nombre = ds.child("nombre").getValue(String::class.java) ?: ""
+                        modeloProducto.descripcion = ds.child("descripcion").getValue(String::class.java) ?: ""
+                        modeloProducto.categoria = ds.child("categoria").getValue(String::class.java) ?: ""
+                        modeloProducto.notaDesc = ds.child("notaDesc").getValue(String::class.java) ?: ""
+                        modeloProducto.favorito = ds.child("favorito").getValue(Boolean::class.java) ?: false
+
+                        modeloProducto.precio = leerDouble(ds, "precio")
+                        modeloProducto.precioDesc = leerDouble(ds, "precioDesc")
+                        modeloProducto.stock = leerDouble(ds, "stock")
+                        
+                        productoArrayList.add(modeloProducto)
                     }
                     productosAdapter = ProductosClienteAdapter(this@ProductosCatCActivity,productoArrayList)
                     binding.rvProductosC.adapter = productosAdapter
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
                 }
             })
+    }
+
+    private fun leerDouble(ds: DataSnapshot, campo: String): Double {
+        val v = ds.child(campo).value ?: return 0.0
+        return when (v) {
+            is Double -> v
+            is Long -> v.toDouble()
+            is Int -> v.toDouble()
+            is String -> v.replace(',', '.').toDoubleOrNull() ?: 0.0
+            else -> 0.0
+        }
     }
 }

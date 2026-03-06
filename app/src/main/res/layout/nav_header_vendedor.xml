@@ -7,6 +7,11 @@
     android:background="@color/azul_marino_oscuro"
     android:orientation="vertical">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo_app"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".cliente.Bottom_Nav_Fragments_Cliente.FragmentHistorialC">
+    tools:context=".cliente.Bottom_Nav_Fragments_Cliente.FragmentHistorialC"
+    android:background="@color/fondo_tinte">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mis compras"
-        android:textSize="18sp"
+        android:text="@string/mis_compras"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:textColor="@color/azul_marino_oscuro"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMisCompras"

@@ -8,5 +8,5 @@ data class Usuarios(
     var dni:String="",
     var fechaNacimiento:String="",
     var tipoUsuario:String="",
-    var tiempoRegistro:Long = 0L
+    var tiempoRegistro:Long = 0L,
 )

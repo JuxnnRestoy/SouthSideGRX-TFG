@@ -1,6 +1,7 @@
 package com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.southsidegrx_tfg.Adapters.UsuariosVendedorAdapter
 import com.example.southsidegrx_tfg.Modelos.Usuarios
+import com.example.southsidegrx_tfg.RegistroUsuarioActivity
 import com.example.southsidegrx_tfg.databinding.FragmentUsuariosVBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

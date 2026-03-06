@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".vendedor.Bottom_Nav_Fragments_Vendedor.FragmentMisProductosV"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/fondo_tinte">
     
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

@@ -58,15 +58,25 @@ class FragmentFavoritosCliente : Fragment() {
                             .addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     try {
-                                        val modeloProducto = snapshot.getValue(Producto::class.java)
-                                        productosArrayList.add(modeloProducto!!)
+                                        val modeloProducto = Producto()
+                                        modeloProducto.id = snapshot.child("id").getValue(String::class.java) ?: snapshot.key ?: ""
+                                        modeloProducto.nombre = snapshot.child("nombre").getValue(String::class.java) ?: ""
+                                        modeloProducto.descripcion = snapshot.child("descripcion").getValue(String::class.java) ?: ""
+                                        modeloProducto.categoria = snapshot.child("categoria").getValue(String::class.java) ?: ""
+                                        modeloProducto.notaDesc = snapshot.child("notaDesc").getValue(String::class.java) ?: ""
+                                        modeloProducto.favorito = snapshot.child("favorito").getValue(Boolean::class.java) ?: false
+
+                                        modeloProducto.precio = leerDouble(snapshot, "precio")
+                                        modeloProducto.precioDesc = leerDouble(snapshot, "precioDesc")
+                                        modeloProducto.stock = leerDouble(snapshot, "stock")
+                                        
+                                        productosArrayList.add(modeloProducto)
                                     } catch (e: Exception) {
 
                                     }
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
                                 }
                             })
                     }
@@ -77,9 +87,19 @@ class FragmentFavoritosCliente : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
                 }
 
             })
+    }
+
+    private fun leerDouble(ds: DataSnapshot, campo: String): Double {
+        val v = ds.child(campo).value ?: return 0.0
+        return when (v) {
+            is Double -> v
+            is Long -> v.toDouble()
+            is Int -> v.toDouble()
+            is String -> v.replace(',', '.').toDoubleOrNull() ?: 0.0
+            else -> 0.0
+        }
     }
 }

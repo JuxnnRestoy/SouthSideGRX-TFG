@@ -23,13 +23,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SouthSideGRXTFG">
         <activity
-            android:name=".Detalles.DetalleCompraActivity"
+            android:name="com.example.southsidegrx_tfg.Detalles.DetalleCompraActivity"
             android:exported="false"/>
         <activity
             android:name=".vendedor.VentaCarritoClienteActivity"
             android:exported="false" />
         <activity
-            android:name=".Detalles.DetalleProductoActivity"
+            android:name="com.example.southsidegrx_tfg.Detalles.DetalleProductoActivity"
             android:exported="false" />
         <activity
             android:name=".cliente.ProductosCliente.ProductosCatCActivity"
@@ -41,18 +41,13 @@
             android:name=".vendedor.Productos.AgregarProductoActivity"
             android:exported="false" />
         <activity
-            android:name=".cliente.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".cliente.RegistroUsuarioActivity"
+            android:name=".RegistroUsuarioActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".vendedor.LoginVendedorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".vendedor.RegistroVendedorActivity"
-            android:exported="false" />
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity
             android:name=".vendedor.MainActivityVendedor"
             android:exported="false" />

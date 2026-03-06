@@ -27,11 +27,6 @@
             android:title="@string/op_usuarios_v"
             android:icon="@drawable/ico_mi_perfil">
         </item>
-        <!-- Mi tienda -->
-        <item
-            android:id="@+id/op_mi_tienda_v"
-            android:title="@string/op_mi_tienda_v"
-            android:icon="@drawable/ico_tienda"/>
     </group>
 
     <!-- Cerrar sesión -->

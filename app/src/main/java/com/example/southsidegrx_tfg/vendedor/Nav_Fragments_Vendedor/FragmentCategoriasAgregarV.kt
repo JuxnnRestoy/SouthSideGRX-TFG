@@ -1,7 +1,6 @@
 package com.example.southsidegrx_tfg.vendedor.Nav_Fragments_Vendedor
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.southsidegrx_tfg.Adapters.CategoriasAdapter
 import com.example.southsidegrx_tfg.Modelos.Categoria
 import com.example.southsidegrx_tfg.R
-import com.example.southsidegrx_tfg.databinding.FragmentCategoriasVBinding
+import com.example.southsidegrx_tfg.databinding.FragmentCategoriasAgregarVBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,9 +22,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 
-class FragmentCategoriasV : Fragment() {
+class FragmentCategoriasAgregarV : Fragment() {
 
-    private lateinit var binding: FragmentCategoriasVBinding
+    private lateinit var binding: FragmentCategoriasAgregarVBinding
     private lateinit var mContext: Context
 
     private var categoria=""
@@ -44,7 +43,7 @@ class FragmentCategoriasV : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCategoriasVBinding.inflate(layoutInflater,container, false)
+        binding = FragmentCategoriasAgregarVBinding.inflate(layoutInflater,container, false)
 
         categoriasArrayList = ArrayList()
         categoriasAdapater = CategoriasAdapter(mContext, categoriasArrayList)

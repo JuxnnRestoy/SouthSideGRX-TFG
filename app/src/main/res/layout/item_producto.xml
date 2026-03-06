@@ -16,6 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageButton
+                android:id="@+id/ib_eliminar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="40dp"
+                android:padding="7dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ico_borrar_"
+                android:contentDescription="Eliminar" />
+
             <!-- Nota del descuento -->
             <TextView
                 android:layout_width="wrap_content"
@@ -35,8 +47,7 @@
                 android:background="@android:color/transparent"
                 android:src="@drawable/ico_editar"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="Editar"/>
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         

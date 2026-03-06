@@ -153,21 +153,21 @@ class ProductosClienteAdapter: RecyclerView.Adapter<ProductosClienteAdapter.Hold
         val precioDesc = modeloProducto.precioDesc
         val notaDesc = modeloProducto.notaDesc
 
-        if(!precioDesc.equals("0")&& !notaDesc.equals("")){
+        if(precioDesc > 0.0 && notaDesc.isNotEmpty()){
             // El producto si tiene descuento
             notaDescTv.visibility = View.VISIBLE
             precioDescTv.visibility = View.VISIBLE
 
             notaDescTv.setText(notaDesc)
-            precioDescTv.setText(precioDesc.plus(" CRD"))
-            precioOriginalTv.setText(precio.plus(" CRD"))
+            precioDescTv.setText(String.format("%.2f CRD", precioDesc))
+            precioOriginalTv.setText(String.format("%.2f CRD", precio))
             precioOriginalTv.paintFlags = precioOriginalTv.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            coste = precioDesc.toDouble() //precio almacena el precio con descuento
+            coste = precioDesc //precio almacena el precio con descuento
         }else{
             // El producto no tiene descuento
-            precioOriginalTv.setText(precio.plus(" CRD"))
+            precioOriginalTv.setText(String.format("%.2f CRD", precio))
             precioOriginalTv.paintFlags = precioOriginalTv.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            coste = precio.toDouble() //almacena el precio original
+            coste = precio //almacena el precio original
 
         }
 
@@ -230,8 +230,8 @@ class ProductosClienteAdapter: RecyclerView.Adapter<ProductosClienteAdapter.Hold
 
         hashMap["idProducto"] = modeloProducto.id
         hashMap["nombre"] = modeloProducto.nombre
-        hashMap["precio"] = modeloProducto.precio.toDoubleOrNull()?:0.0
-        hashMap["precioDesc"] = modeloProducto.precioDesc.toDoubleOrNull()?:0.0
+        hashMap["precio"] = modeloProducto.precio
+        hashMap["precioDesc"] = modeloProducto.precioDesc
         hashMap["precioFinal"] = costeFinal
         hashMap["cantidad"] = cantidadProducto
 
@@ -305,15 +305,15 @@ class ProductosClienteAdapter: RecyclerView.Adapter<ProductosClienteAdapter.Hold
             })
     }
     private fun visualizarDescuento(modeloProducto: Producto,holder: ProductosClienteAdapter.HolderProducto){
-        if(!modeloProducto.precioDesc.equals("0") && !modeloProducto.notaDesc.equals("")){
+        if(modeloProducto.precioDesc > 0.0 && modeloProducto.notaDesc.isNotEmpty()){
             // habilitar vistas
             holder.item_nota_p.visibility=View.VISIBLE
             holder.item_precio_desc_p.visibility = View.VISIBLE
 
             //set de la informacion
             holder.item_nota_p.text = "${modeloProducto.notaDesc}"
-            holder.item_precio_desc_p.text = "${modeloProducto.precioDesc} CRD"
-            holder.item_precio_p.text = "${modeloProducto.precio} CRD"
+            holder.item_precio_desc_p.text = String.format("%.2f CRD", modeloProducto.precioDesc)
+            holder.item_precio_p.text = String.format("%.2f CRD", modeloProducto.precio)
             holder.item_precio_p.paintFlags = holder.item_precio_p.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG //tachar precio original
         }else{
             //el producto no tiene descuento -> ocultar vistas
@@ -321,7 +321,7 @@ class ProductosClienteAdapter: RecyclerView.Adapter<ProductosClienteAdapter.Hold
             holder.item_precio_desc_p.visibility = View.GONE
 
             // set informacion
-            holder.item_precio_p.text = "${modeloProducto.precio} CRD"
+            holder.item_precio_p.text = String.format("%.2f CRD", modeloProducto.precio)
             holder.item_precio_p.paintFlags = holder.item_precio_p.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv() //quitar tachado
         }
     }

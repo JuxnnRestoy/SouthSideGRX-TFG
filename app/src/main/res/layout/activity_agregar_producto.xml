@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vendedor.Productos.AgregarProductoActivity">
+    tools:context=".vendedor.Productos.AgregarProductoActivity"
+    android:background="@color/fondo_tinte">
 
     <!--Toolbar-->
     <RelativeLayout
@@ -75,7 +76,8 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_imagenes_seleccionadas"
-                app:spanCount="4"/>
+                app:spanCount="4"
+                android:background="@color/white"/>
 
             <!-- Nombres del producto -->
             <com.google.android.material.textfield.TextInputLayout

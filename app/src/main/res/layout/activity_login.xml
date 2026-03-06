@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondo_tinte"
-    tools:context=".cliente.LoginActivity">
+    tools:context=".LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -35,9 +35,9 @@
 
             <!-- Icono -->
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ico_login_cliente"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/logo_app"
                 android:contentDescription="@string/txt_login_c"
                 android:layout_marginBottom="16dp" />
 
@@ -110,6 +110,16 @@
                         android:textAllCaps="true"
                         app:cornerRadius="14dp"
                         app:iconPadding="10dp" />
+
+                    <TextView
+                        android:id="@+id/tvOlvidePass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/olv_contrasena"
+                        android:textStyle="bold"
+                        android:textColor="@color/azul_oscuro"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"/>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"

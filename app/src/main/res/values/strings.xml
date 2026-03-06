@@ -56,6 +56,7 @@
     <string name="txt_login_c">Iniciar Sesión</string>
     <string name="btn_login_c">Acceder</string>
     <string name="tv_login_c">Registrarme</string>
+    <string name="olv_contrasena">¿Has olvidado tu contraseña?</string>
 
     <!-- Productos -->
     <string name="txt_agregar_productos">Agregar Producto</string>4
@@ -128,6 +129,10 @@
 
     <string name="btn_crear_cliente">Añadir nuevo cliente</string>
     <string name="btn_crear_vendedor">Añadir nuevo vendedor</string>
+
+    <string name="favoritos">Favoritos</string>
+    <string name="mis_compras">Mis compras</string>
+    <string name="no_ventas">No hay ventas todavía</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

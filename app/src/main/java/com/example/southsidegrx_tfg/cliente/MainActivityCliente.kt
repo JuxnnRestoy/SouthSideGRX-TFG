@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.example.southsidegrx_tfg.LoginActivity
 import com.example.southsidegrx_tfg.R
 import com.example.southsidegrx_tfg.cliente.Bottom_Nav_Fragments_Cliente.FragmentHistorialC
 import com.example.southsidegrx_tfg.cliente.Nav_Fragments_Cliente.FragmentInicioCliente

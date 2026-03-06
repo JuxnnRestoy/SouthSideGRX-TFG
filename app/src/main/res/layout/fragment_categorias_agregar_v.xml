@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".vendedor.Nav_Fragments_Vendedor.FragmentCategoriasV">
+    tools:context=".vendedor.Nav_Fragments_Vendedor.FragmentCategoriasAgregarV"
+    android:background="@color/fondo_tinte">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
